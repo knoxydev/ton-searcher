@@ -1,0 +1,68 @@
+@import 'src/fonts/font.css';
+
+:root {
+	--main-blue: #0088CC;
+	--main-radius: 7px;
+	--main-grey: #2F2F2F;
+	--light-blue: #00D0CC;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  background-color: var(--body-color);
+}
+
+* {transition: 0.3s ease-in-out; font-family: "Montserrat", serif;}
+button:focus {outline: none;}
+input:focus {outline: none;}
+textarea:focus {outline: none;}
+ul, li {padding: 0;margin: 0;list-style: none;}
+
+::-webkit-scrollbar {background: rgba(255, 255, 255, 1); width: 7px;}
+::-webkit-scrollbar-thumb {background: var(--light-purple); border-radius: 0px;}
+::-webkit-scrollbar-track-piece {background: transparent;}
+
+#main-block {
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 50px;
+	background: transparent;
+	text-align: center;
+	border: 2px solid transparent;
+	width: 85%;
+}
+
+#main-header-block > div:nth-of-type(1) {
+	font-size: 20pt;
+	letter-spacing: 1.5px;
+	color: var(--main-blue);
+	font-weight: bold;
+}
+
+#main-search-input {
+	background-color: white;
+	color: var(--dark-grey);
+	padding: 8px;
+	width: 400px;
+	font-size: 14pt;
+	letter-spacing: 1px;
+	border: 2px solid var(--main-blue);
+	border-bottom: 2px solid var(--main-blue);
+	border-radius: var(--main-radius);
+}
+#main-search-input:focus {
+	border: 2px solid transparent;
+	border-bottom: 2px solid var(--main-blue);
+	border-radius: 0px;
+}
+
+#main-wallet-block {
+	width: 85%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	padding: 14px;
+	margin-top: 60px;
+}
