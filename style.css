@@ -31,7 +31,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	padding-top: 50px;
 	background: transparent;
 	text-align: center;
-	border: 2px solid transparent;
+	border: 1px solid transparent;
 	width: 95%;
 }
 
@@ -45,8 +45,8 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 #main-search-input {
 	background-color: white;
 	color: var(--dark-grey);
-	padding: 8px;
-	width: 70%;
+	padding: 6px;
+	width: 50%;
 	font-size: 14pt;
 	letter-spacing: -0.5px;
 	border: 2px solid var(--main-blue);
@@ -79,13 +79,16 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	width: 100px;
 	letter-spacing: 0.5px;
 	font-weight: bold;
+	user-select: none;
 }
 #main-wallet-block > div > span:nth-of-type(2) {
 	width: 100%;
 	letter-spacing: 0.5px;
+	font-size: 13pt;
 }
 #main-wallet-block > div > span {
 	padding: 8px;
 	border: 2px solid transparent;
 }
+
 
