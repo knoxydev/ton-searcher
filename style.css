@@ -91,4 +91,33 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	border: 2px solid transparent;
 }
 
+#main-transactions-block {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	margin-top: 20px;
+	border: 3px solid var(--main-blue);
+	border-radius: var(--main-radius);
+	background-color: white;
+}
+#main-transactions-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#main-transactions-table > tr > th {
+	font-weight: bold;
+	user-select: none;
+}
+
+table, th, td {
+  border-collapse: collapse;
+  padding: 10px;
+  text-align: left;
+}
+
+
+
+
 
