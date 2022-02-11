@@ -33,13 +33,12 @@ async function getAddressState(address) {
 
 async function getTransactions(address) {
 	let url = `https://toncenter.com/api/v2/getTransactions?address=${address}&limit=10&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`;
-	//let ur2 = `https://api.ton.cat/v2/explorer/getTransactions?address=${address}&lt=${wallet['lt']}&limit=10&hash=${wallet['hash']}`;
 
 	let answerOne = await fetch(url);
 	let resp = await answerOne.json();
 	let base = resp.result;
 
-	console.log(base);
+	//console.log(base);
 
 	let table = document.getElementById("main-transactions-table");
 	table.innerHTML = "";
