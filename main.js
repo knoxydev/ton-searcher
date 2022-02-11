@@ -33,6 +33,7 @@ async function getAddressState(address) {
 
 async function getTransactions(address) {
 	let url = `https://toncenter.com/api/v2/getTransactions?address=${address}&limit=10&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`;
+	//let ur2 = `https://api.ton.cat/v2/explorer/getTransactions?address=${address}&lt=${wallet['lt']}&limit=10&hash=${wallet['hash']}`;
 
 	let answerOne = await fetch(url);
 	let resp = await answerOne.json();
@@ -81,16 +82,14 @@ async function getTransactions(address) {
 
 	for (i = 0; i < base.length; i++) {
 		if (base[i]['out_msgs'].length == 0) {
-
 			let coin = getTonPrice(base[i]['in_msg']['value']);
-			let time = base[i]['utime'];
+			let time = new Date(parseInt(base[i]['utime'] + "000")).toLocaleString();
 			let adrs = base[i]['in_msg']['source'];
 
 			await createTransactionsList([time, coin, "From", adrs]);
 		} else {
-
 			let coin = getTonPrice(base[i]['out_msgs'][0]['value']);
-			let time = base[i]['utime'];
+			let time = new Date(parseInt(base[i]['utime'] + "000")).toLocaleString();
 			let adrs = base[i]['out_msgs'][0]['destination'];
 
 			await createTransactionsList([time, coin, "To", adrs]);
