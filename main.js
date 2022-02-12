@@ -106,13 +106,8 @@ document.getElementById("main-search-input").addEventListener("focus", (e) => {
 
 async function start(e) {
 	if (e.keyCode == 13) {
-		let inpText = document.getElementById("main-search-input").value;
-
-		if (inpText.charAt(inpText.length - 1) == " ") {
-			inpText = inpText.slice(0, -1);
-			document.getElementById("main-search-input").value = inpText;
-		}
-		//if (inpText == "") return createContent();
+		let inpText = document.getElementById("main-search-input").value.trim();
+		if (inpText == "") return;
 
 		await getAddressInfo(inpText);
 		await getAddressState(inpText);
