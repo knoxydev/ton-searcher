@@ -38,7 +38,7 @@ async function getTransactions(address) {
 	let resp = await answerOne.json();
 	let base = resp.result;
 
-	//console.log(base);
+	console.log(base);
 
 	let table = document.getElementById("main-transactions-table");
 	table.innerHTML = "";
@@ -54,7 +54,7 @@ async function getTransactions(address) {
 
 		table.append(tr);	
 	}
-	await createTableTitle(['Time', 'Coin', 'From/To', 'Address']);
+	await createTableTitle(['Time', 'Fee', 'Coin', 'From/To', 'Address']);
 
 	function createTransactionsList(data) {
 		let tr = document.createElement('tr');
@@ -62,8 +62,8 @@ async function getTransactions(address) {
 		data.forEach((item, index) => {
 			let td = document.createElement('td');
 			
-			if (index == 1) {
-				if (data[2] == "From") {
+			if (index == 2) {
+				if (data[3] == "From") {
 					td.innerHTML = `+${item} 💎`;
 					td.style.color = "green";
 				}
@@ -84,14 +84,16 @@ async function getTransactions(address) {
 			let coin = getTonPrice(base[i]['in_msg']['value']);
 			let time = new Date(parseInt(base[i]['utime'] + "000")).toLocaleString();
 			let adrs = base[i]['in_msg']['source'];
+			let tfee = `${getTonPrice(base[i]['fee'])} 💎`;
 
-			await createTransactionsList([time, coin, "From", adrs]);
+			await createTransactionsList([time, tfee, coin, "From", adrs]);
 		} else {
 			let coin = getTonPrice(base[i]['out_msgs'][0]['value']);
 			let time = new Date(parseInt(base[i]['utime'] + "000")).toLocaleString();
 			let adrs = base[i]['out_msgs'][0]['destination'];
+			let tfee = `${getTonPrice(base[i]['fee'])} 💎`;
 
-			await createTransactionsList([time, coin, "To", adrs]);
+			await createTransactionsList([time, tfee, coin, "To", adrs]);
 		}
 	}
 }
@@ -108,6 +110,10 @@ async function start(e) {
 	if (e.keyCode == 13) {
 		let inpText = document.getElementById("main-search-input").value.trim();
 		if (inpText == "") return;
+
+		document.getElementById("main-block").style = "padding-top: 40px";
+		document.getElementById("main-wallet-block").style.display = "block";
+		document.getElementById("main-transactions-block").style.display = "block";
 
 		await getAddressInfo(inpText);
 		await getAddressState(inpText);
