@@ -22,7 +22,7 @@ textarea:focus {outline: none;}
 ul, li {padding: 0;margin: 0;list-style: none;}
 
 ::-webkit-scrollbar {background: rgba(255, 255, 255, 1); width: 7px;, height: 2px;}
-::-webkit-scrollbar-thumb {background: #c0c0c0; border-radius: 0px;}
+::-webkit-scrollbar-thumb {background: #999999; border-radius: 0px;}
 ::-webkit-scrollbar-track-piece {background: transparent;}
 
 #main-block {
@@ -78,7 +78,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	justify-content: flex-start;
 }
 #main-wallet-block > div > span:nth-of-type(1) {
-	width: 100px;
+	width: 180px;
 	letter-spacing: 0.5px;
 	font-weight: bold;
 	user-select: none;
@@ -106,11 +106,11 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	overflow-x: scroll;
 	white-space: nowrap;
 }
-#main-transactions-table {
-	width: 100%;
-	border-collapse: collapse;
-}
 
+#main-transactions-block::-webkit-scrollbar {display: block; height: 8px;}
+#main-transactions-block::-webkit-scrollbar-thumb {background: #999999; border-radius: 0px;}
+#main-transactions-block::-webkit-scrollbar-track-piece {background: transparent;}
+#main-transactions-table {width: 100%; border-collapse: collapse;}
 #main-transactions-table > tr > th {font-weight: bold; user-select: none;}
 #main-transactions-table > tr > td:nth-of-type(3),
 #main-transactions-table > tr > td:nth-of-type(2) {text-align: right;}
@@ -119,7 +119,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 
 table, th, td {
   border-collapse: collapse;
-  padding: 10px;
+  padding: 12px;
   text-align: left;
 }
 

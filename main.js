@@ -20,6 +20,14 @@ async function getAddressInfo(address) {
 
 	document.getElementById("wallet-address").innerHTML = resp.result.address.account_address;
 	document.getElementById("wallet-balance").innerHTML = `${ton} 💎`;
+	document.getElementById("wallet-contract-type").innerHTML = resp.result.account_state["@type"];
+	
+	console.log(resp.result);
+
+	let time = new Date(parseInt(resp.result['sync_utime'] + "000")).toLocaleString();
+	console.log(time)
+
+	getAddressState(address);
 }
 
 async function getAddressState(address) {
@@ -29,16 +37,17 @@ async function getAddressState(address) {
 	let resp = await answerOne.json();
 
 	document.getElementById("wallet-status").innerHTML = resp.result;
+	getTransactions(address);
 }
 
 async function getTransactions(address) {
-	let url = `https://toncenter.com/api/v2/getTransactions?address=${address}&limit=10&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`;
+	let url = `https://toncenter.com/api/v2/getTransactions?address=${address}&limit=10&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=true`;
 
 	let answerOne = await fetch(url);
 	let resp = await answerOne.json();
 	let base = resp.result;
 
-	console.log(base);
+	//console.log(base);
 
 	let table = document.getElementById("main-transactions-table");
 	table.innerHTML = "";
@@ -116,7 +125,5 @@ async function start(e) {
 		document.getElementById("main-transactions-block").style.display = "block";
 
 		await getAddressInfo(inpText);
-		await getAddressState(inpText);
-		await getTransactions(inpText);
 	}
 }
