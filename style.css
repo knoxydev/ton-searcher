@@ -1,10 +1,10 @@
 @import 'src/fonts/font.css';
 
 :root {
-	--main-blue: #0088CC;
+	--main-blue: #005197;
 	--main-radius: 8px;
 	--main-grey: #2F2F2F;
-	--light-blue: #00D0CC;
+	--light-blue: #0088CC;
 	--dark-blue: #303757;
 }
 
@@ -21,14 +21,14 @@ input:focus {outline: none;}
 textarea:focus {outline: none;}
 ul, li {padding: 0;margin: 0;list-style: none;}
 
-::-webkit-scrollbar {background: rgba(255, 255, 255, 1); width: 7px;}
-::-webkit-scrollbar-thumb {background: var(--light-purple); border-radius: 0px;}
+::-webkit-scrollbar {background: rgba(255, 255, 255, 1); width: 7px;, height: 2px;}
+::-webkit-scrollbar-thumb {background: #c0c0c0; border-radius: 0px;}
 ::-webkit-scrollbar-track-piece {background: transparent;}
 
 #main-block {
 	margin-left: auto;
 	margin-right: auto;
-	padding-top: 40px;
+	padding-top: 100px;
 	background: transparent;
 	text-align: center;
 	border: 1px solid transparent;
@@ -56,12 +56,12 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 }
 #main-search-input:focus {
 	border: 2px solid transparent;
-	border-bottom: 2px solid var(--main-blue);
+	border-bottom: 2px solid var(--light-blue);
 	border-radius: 0px;
 }
 
 #main-wallet-block {
-	width: 90%;
+	width: 95%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
@@ -69,6 +69,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	border: 3px solid var(--main-blue);
 	border-radius: var(--main-radius);
 	background-color: white;
+	display: none;
 }
 
 #main-wallet-block > div {
@@ -93,7 +94,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 }
 
 #main-transactions-block {
-	width: 90%;
+	width: 95%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
@@ -101,16 +102,20 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	border: 3px solid var(--main-blue);
 	border-radius: var(--main-radius);
 	background-color: white;
+	display: none;
+	overflow-x: scroll;
+	white-space: nowrap;
 }
 #main-transactions-table {
 	width: 100%;
 	border-collapse: collapse;
 }
 
-#main-transactions-table > tr > th {
-	font-weight: bold;
-	user-select: none;
-}
+#main-transactions-table > tr > th {font-weight: bold; user-select: none;}
+#main-transactions-table > tr > td:nth-of-type(3),
+#main-transactions-table > tr > td:nth-of-type(2) {text-align: right;}
+#main-transactions-table > tr > th:nth-of-type(3),
+#main-transactions-table > tr > th:nth-of-type(2) {text-align: right;}
 
 table, th, td {
   border-collapse: collapse;
