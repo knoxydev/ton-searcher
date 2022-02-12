@@ -115,7 +115,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 #main-transactions-table > tr > td:nth-of-type(3),
 #main-transactions-table > tr > td:nth-of-type(2) {text-align: right;}
 #main-transactions-table > tr > th:nth-of-type(3),
-#main-transactions-table > tr > th:nth-of-type(2) {text-align: right;}
+#main-transactions-table > tr > th:nth-of-type(2) {text-align: center;}
 
 table, th, td {
   border-collapse: collapse;
