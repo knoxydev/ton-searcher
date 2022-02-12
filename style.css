@@ -28,7 +28,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 #main-block {
 	margin-left: auto;
 	margin-right: auto;
-	padding-top: 100px;
+	padding-top: 120px;
 	background: transparent;
 	text-align: center;
 	border: 1px solid transparent;
@@ -110,7 +110,9 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 #main-transactions-block::-webkit-scrollbar {display: block; height: 8px;}
 #main-transactions-block::-webkit-scrollbar-thumb {background: #999999; border-radius: 0px;}
 #main-transactions-block::-webkit-scrollbar-track-piece {background: transparent;}
+
 #main-transactions-table {width: 100%; border-collapse: collapse;}
+#main-transactions-table > tr > td {font-size: 14px;}
 #main-transactions-table > tr > th {font-weight: bold; user-select: none;}
 #main-transactions-table > tr > td:nth-of-type(3),
 #main-transactions-table > tr > td:nth-of-type(2) {text-align: right;}
