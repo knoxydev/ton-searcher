@@ -5,12 +5,41 @@ let wallet = {
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
+async function getTonUsdPrice(coins) {
+	let url = "https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd&include_market_cap=false&include_24hr_vol=false&include_24hr_change=false&include_last_updated_at=false";
+
+	let request = await fetch(url);
+	let resp = await request.json();
+
+	let price = resp["the-open-network"]["usd"] * coins;
+
+	return price;
+}
+
 async function getAddressInfo(address) {
 	let url = `https://toncenter.com/api/v2/getExtendedAddressInformation?address=${address}`;
 
-	let answerOne = await fetch(url);
-	let resp = await answerOne.json();
+	let request = await fetch(url);
+	let resp = await request.json();
+
+	if (request.status == 502 || request.status == 504) return await getAddressInfo(address);
 	let ton = getTonPrice(resp.result.balance);
+
+	let numberWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	let coins = numberWithSpaces(Number(String(ton).split('.')[0]));
+	let str = String(ton).split('').reverse().join('');
+
+	let tonCoins = x => {
+		for (i = 0; i < str.length; i++) {
+			if (str[i] == ".") break;
+			x.push(str[i])
+		}
+		return x;
+	}
+
+	//console.log(await getTonUsdPrice(Number(String(ton).split('.')[0])));
+
+	ton = `${coins},${tonCoins([]).reverse().join('')}`;
 
 	wallet['lt'] = resp.result.last_transaction_id['lt'];
 	wallet['hash'] = resp.result.last_transaction_id['hash'];
@@ -20,12 +49,6 @@ async function getAddressInfo(address) {
 
 	document.getElementById("wallet-address").innerHTML = resp.result.address.account_address;
 	document.getElementById("wallet-balance").innerHTML = `${ton} 💎`;
-	document.getElementById("wallet-contract-type").innerHTML = resp.result.account_state["@type"];
-	
-	console.log(resp.result);
-
-	let time = new Date(parseInt(resp.result['sync_utime'] + "000")).toLocaleString();
-	console.log(time)
 
 	getAddressState(address);
 }
@@ -33,21 +56,23 @@ async function getAddressInfo(address) {
 async function getAddressState(address) {
 	let url = `https://toncenter.com/api/v2/getAddressState?address=${address}`;
 
-	let answerOne = await fetch(url);
-	let resp = await answerOne.json();
+	let request = await fetch(url);
+	let resp = await request.json();
 
-	document.getElementById("wallet-status").innerHTML = resp.result;
+	if (request.status == 502 || request.status == 504) return await getAddressState(address);
+
+	document.getElementById("wallet-state").innerHTML = resp.result;
 	getTransactions(address);
 }
 
 async function getTransactions(address) {
-	let url = `https://toncenter.com/api/v2/getTransactions?address=${address}&limit=10&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=true`;
+	let url = `https://toncenter.com/api/v2/getTransactions?address=${address}&limit=100&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`;
 
-	let answerOne = await fetch(url);
-	let resp = await answerOne.json();
-	let base = resp.result;
+	let request = await fetch(url);
+	let resp = await request.json();
+	let base = await resp.result;
 
-	//console.log(base);
+	if (request.status == 502 || request.status == 504) return await getTransactions(address);
 
 	let table = document.getElementById("main-transactions-table");
 	table.innerHTML = "";
