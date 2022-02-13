@@ -17,27 +17,12 @@
 
 	#main-wallet-block {width: 90%; margin-top: 100px;}
 	#main-wallet-block > div {font-size: 12pt;}
-	#main-wallet-block > div > span:nth-of-type(1) {
-		width: 90px;
-		letter-spacing: 0px;
-	}
-	#main-wallet-block > div > span:nth-of-type(2) {
-		width: 100%;
-		letter-spacing: 0px;
-	}
+	#main-wallet-block > div > span:nth-of-type(1) {width: 90px; letter-spacing: 0px;}
+	#main-wallet-block > div > span:nth-of-type(2) {width: 90%; letter-spacing: 0px;}
 	#main-wallet-block > div > span {padding: 6px;}
 
-	#main-transactions-block {
-		width: 90%;
-		margin-top: 30px;
-	}
-
-	#main-transactions-block > div {
-		margin-bottom: 20px;
-		word-break: break-all;
-		padding: 4px;
-		font-size: 12pt;
-	}
+	#main-transactions-block {width: 100%; margin-top: 30px;}
+	#main-transactions-block > div {width: 90%; font-size: 12pt;}
 	#main-transactions-block > div > div {padding: 5px; letter-spacing: 0px;}
 	#main-transactions-block > div > div:nth-of-type(1) {font-size: 14pt;}
 	#main-transactions-block > div > div:nth-of-type(2) > span {font-size: 13pt;}
@@ -49,5 +34,4 @@
 		font-weight: bold;
 		letter-spacing: 1px;
 	}
-
 }

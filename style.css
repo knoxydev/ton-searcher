@@ -31,7 +31,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	background: transparent;
 	text-align: center;
 	border: 0px solid transparent;
-	width: 95%;
+	width: 100%;
 }
 
 #main-header-block {
@@ -108,12 +108,12 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	word-break: break-all;
 }
 #main-wallet-block > div > span {
-	padding: 8px;
+	padding: 6px;
 	border: 2px solid transparent;
 }
 
 #main-transactions-block {
-	width: 70%;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
@@ -123,6 +123,9 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 }
 
 #main-transactions-block > div {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom: 20px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
