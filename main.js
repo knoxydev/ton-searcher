@@ -71,8 +71,6 @@ async function getTransactions(address) {
 		base = await resp.result;
 	} catch {return getTransactions(address);}
 
-	console.log(base);
-
 	if (base.length == 0) {
 		document.getElementById("no-transactions-block").style.display = "block";
 		document.getElementById("main-transactions-block").style.display = "none";
