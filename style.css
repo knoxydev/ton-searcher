@@ -47,7 +47,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	color: var(--dark-grey);
 	padding: 6px;
 	padding-left: 10px;
-	width: 50%;
+	width: 70%;
 	font-size: 14pt;
 	letter-spacing: -0.5px;
 	border: 2px solid var(--main-blue);
@@ -78,7 +78,7 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	justify-content: flex-start;
 }
 #main-wallet-block > div > span:nth-of-type(1) {
-	width: 180px;
+	width: 100px;
 	letter-spacing: 0.5px;
 	font-weight: bold;
 	user-select: none;
@@ -105,6 +105,13 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	display: none;
 	overflow-x: scroll;
 	white-space: nowrap;
+}
+#no-transactions-block {
+	display: none;
+	margin-top: 40px;
+	font-size: 14pt;
+	font-weight: bold;
+	letter-spacing: 1px;
 }
 
 #main-transactions-block::-webkit-scrollbar {display: block; height: 8px;}

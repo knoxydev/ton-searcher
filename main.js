@@ -17,13 +17,17 @@ async function getTonUsdPrice(coins) {
 }
 
 async function getAddressInfo(address) {
-	let url = `https://toncenter.com/api/v2/getExtendedAddressInformation?address=${address}`;
+	let resp;
+	try {
+		let request = await fetch(`https://toncenter.com/api/v2/getExtendedAddressInformation?address=${address}`);
+		resp = await request.json();
+	} catch {return getAddressInfo(address);}
+	
+	console.log(resp)
 
-	let request = await fetch(url);
-	let resp = await request.json();
+	//if (request.status == 502 || request.status == 504) 
 
-	if (request.status == 502 || request.status == 504) return await getAddressInfo(address);
-	let ton = getTonPrice(resp.result.balance);
+	let ton = (resp.result.balance == "-1") ? 0 : getTonPrice(resp.result.balance);
 
 	let numberWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 	let coins = numberWithSpaces(Number(String(ton).split('.')[0]));
@@ -54,25 +58,31 @@ async function getAddressInfo(address) {
 }
 
 async function getAddressState(address) {
-	let url = `https://toncenter.com/api/v2/getAddressState?address=${address}`;
-
-	let request = await fetch(url);
-	let resp = await request.json();
-
-	if (request.status == 502 || request.status == 504) return await getAddressState(address);
+	let resp;
+	try {
+		let request = await fetch(`https://toncenter.com/api/v2/getAddressState?address=${address}`);
+		resp = await request.json();
+	} catch {return getAddressState(address);}
+	
+	//if (request.status == 502 || request.status == 504) 
 
 	document.getElementById("wallet-state").innerHTML = resp.result;
 	getTransactions(address);
 }
 
 async function getTransactions(address) {
-	let url = `https://toncenter.com/api/v2/getTransactions?address=${address}&limit=100&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`;
+	let base;
+	try {
+		let request = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${address}&limit=100&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`);
+		let resp = await request.json();
+		base = await resp.result;
+	} catch {return getTransactions(address);}
 
-	let request = await fetch(url);
-	let resp = await request.json();
-	let base = await resp.result;
-
-	if (request.status == 502 || request.status == 504) return await getTransactions(address);
+	if (base.length == 0) {
+		document.getElementById("no-transactions-block").style.display = "block";
+		document.getElementById("main-transactions-block").style.display = "none";
+		return;
+	} else document.getElementById("no-transactions-block").style.display = "none";
 
 	let table = document.getElementById("main-transactions-table");
 	table.innerHTML = "";
@@ -88,7 +98,7 @@ async function getTransactions(address) {
 
 		table.append(tr);	
 	}
-	await createTableTitle(['Time', 'Fee', 'Coin', 'From/To', 'Address']);
+	createTableTitle(['Time', 'Fee', 'TON', 'From/To', 'Address']);
 
 	function createTransactionsList(data) {
 		let tr = document.createElement('tr');
@@ -140,7 +150,7 @@ document.getElementById("main-search-input").addEventListener("focus", (e) => {
 	document.getElementById("main-search-input").removeEventListener("keydown", (e) => start(e));
 });
 
-async function start(e) {
+function start(e) {
 	if (e.keyCode == 13) {
 		let inpText = document.getElementById("main-search-input").value.trim();
 		if (inpText == "") return;
@@ -149,6 +159,6 @@ async function start(e) {
 		document.getElementById("main-wallet-block").style.display = "block";
 		document.getElementById("main-transactions-block").style.display = "block";
 
-		await getAddressInfo(inpText);
+		getAddressInfo(inpText);
 	}
 }
