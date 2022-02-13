@@ -28,26 +28,44 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 #main-block {
 	margin-left: auto;
 	margin-right: auto;
-	padding-top: 120px;
 	background: transparent;
 	text-align: center;
-	border: 1px solid transparent;
+	border: 0px solid transparent;
 	width: 95%;
 }
 
-#main-header-block > div:nth-of-type(1) {
+#main-header-block {
+	width: 100%;
+	height: 50px;
+	background-color: white;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#main-header-block > div {
+	flex-grow: 1;
+	padding: 20px;
+}
+
+#main-header-block > div:nth-of-type(1) {text-align: left;}
+#main-header-block > div:nth-of-type(2) {text-align: right;}
+
+#main-header-block > div:nth-of-type(1) > div {
 	font-size: 20pt;
 	letter-spacing: 1.5px;
 	color: var(--main-blue);
 	font-weight: bold;
+	user-select: none;
+	padding: 4px;
 }
 
 #main-search-input {
 	background-color: white;
 	color: var(--dark-grey);
 	padding: 6px;
-	padding-left: 10px;
-	width: 70%;
+	width: 90%;
+	height: 25px;
 	font-size: 14pt;
 	letter-spacing: -0.5px;
 	border: 2px solid var(--main-blue);
@@ -56,19 +74,19 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 }
 #main-search-input:focus {
 	border: 2px solid transparent;
-	border-bottom: 2px solid var(--light-blue);
+	border-bottom: 2px solid var(--main-blue);
 	border-radius: 0px;
 }
 
 #main-wallet-block {
-	width: 95%;
+	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
-	margin-top: 60px;
-	border: 3px solid var(--main-blue);
-	border-radius: var(--main-radius);
+	padding: 4px;
+	margin-top: 70px;
 	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 	display: none;
 }
 
@@ -76,9 +94,10 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
+	font-size: 14pt;
 }
 #main-wallet-block > div > span:nth-of-type(1) {
-	width: 100px;
+	width: 90px;
 	letter-spacing: 0.5px;
 	font-weight: bold;
 	user-select: none;
@@ -86,7 +105,6 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 #main-wallet-block > div > span:nth-of-type(2) {
 	width: 100%;
 	letter-spacing: 0.5px;
-	font-size: 13pt;
 }
 #main-wallet-block > div > span {
 	padding: 8px;
@@ -94,18 +112,27 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 }
 
 #main-transactions-block {
-	width: 95%;
+	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
-	margin-top: 20px;
-	border: 3px solid var(--main-blue);
-	border-radius: var(--main-radius);
+	margin-top: 30px;
 	background-color: white;
 	display: none;
-	overflow-x: scroll;
-	white-space: nowrap;
 }
+
+#main-transactions-block > div {
+	margin-bottom: 20px;
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+	white-space: nowrap;
+	padding: 6px;
+	font-size: 14pt;
+}
+#main-transactions-block > div > div {padding: 5px; letter-spacing: 1px;}
+#main-transactions-block > div > div:nth-of-type(1) {font-size: 15pt;}
+#main-transactions-block > div > div:nth-of-type(2) > span {font-size: 14pt;}
+
 #no-transactions-block {
 	display: none;
 	margin-top: 40px;
@@ -113,26 +140,4 @@ ul, li {padding: 0;margin: 0;list-style: none;}
 	font-weight: bold;
 	letter-spacing: 1px;
 }
-
-#main-transactions-block::-webkit-scrollbar {display: block; height: 8px;}
-#main-transactions-block::-webkit-scrollbar-thumb {background: #999999; border-radius: 0px;}
-#main-transactions-block::-webkit-scrollbar-track-piece {background: transparent;}
-
-#main-transactions-table {width: 100%; border-collapse: collapse;}
-#main-transactions-table > tr > td {font-size: 14px;}
-#main-transactions-table > tr > th {font-weight: bold; user-select: none;}
-#main-transactions-table > tr > td:nth-of-type(3),
-#main-transactions-table > tr > td:nth-of-type(2) {text-align: right;}
-#main-transactions-table > tr > th:nth-of-type(3),
-#main-transactions-table > tr > th:nth-of-type(2) {text-align: center;}
-
-table, th, td {
-  border-collapse: collapse;
-  padding: 12px;
-  text-align: left;
-}
-
-
-
-
 

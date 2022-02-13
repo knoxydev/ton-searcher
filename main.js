@@ -10,7 +10,6 @@ async function getTonUsdPrice(coins) {
 
 	let request = await fetch(url);
 	let resp = await request.json();
-
 	let price = resp["the-open-network"]["usd"] * coins;
 
 	return price;
@@ -22,10 +21,6 @@ async function getAddressInfo(address) {
 		let request = await fetch(`https://toncenter.com/api/v2/getExtendedAddressInformation?address=${address}`);
 		resp = await request.json();
 	} catch {return getAddressInfo(address);}
-	
-	console.log(resp)
-
-	//if (request.status == 502 || request.status == 504) 
 
 	let ton = (resp.result.balance == "-1") ? 0 : getTonPrice(resp.result.balance);
 
@@ -62,9 +57,7 @@ async function getAddressState(address) {
 	try {
 		let request = await fetch(`https://toncenter.com/api/v2/getAddressState?address=${address}`);
 		resp = await request.json();
-	} catch {return getAddressState(address);}
-	
-	//if (request.status == 502 || request.status == 504) 
+	} catch {return getAddressState(address);} 
 
 	document.getElementById("wallet-state").innerHTML = resp.result;
 	getTransactions(address);
@@ -78,49 +71,50 @@ async function getTransactions(address) {
 		base = await resp.result;
 	} catch {return getTransactions(address);}
 
+	console.log(base);
+
 	if (base.length == 0) {
 		document.getElementById("no-transactions-block").style.display = "block";
 		document.getElementById("main-transactions-block").style.display = "none";
 		return;
 	} else document.getElementById("no-transactions-block").style.display = "none";
 
-	let table = document.getElementById("main-transactions-table");
-	table.innerHTML = "";
-
-	function createTableTitle(titleWords) {
-		let tr = document.createElement('tr');
-
-		for (let elem of titleWords) {
-			let th = document.createElement('th');
-			th.innerHTML = elem;
-			tr.append(th);
-		}
-
-		table.append(tr);	
-	}
-	createTableTitle(['Time', 'Fee', 'TON', 'From/To', 'Address']);
+	let transactionList = document.getElementById("main-transactions-block");
+	transactionList.innerHTML = "";
 
 	function createTransactionsList(data) {
-		let tr = document.createElement('tr');
+		let mainDiv = document.createElement('div');
 
 		data.forEach((item, index) => {
-			let td = document.createElement('td');
-			
-			if (index == 2) {
-				if (data[3] == "From") {
-					td.innerHTML = `+${item} 💎`;
-					td.style.color = "green";
+			if (index == 0) {
+				let balanceDiv = document.createElement('div');
+				if (data[1] == "From") {
+					balanceDiv.innerHTML = `+${item} 💎`;
+					balanceDiv.style.color = "green";
 				}
 				else {
-					td.innerHTML = `-${item} 💎`;
-					td.style.color = "maroon";
+					balanceDiv.innerHTML = `-${item} 💎`;
+					balanceDiv.style.color = "maroon";
 				}
-			} else td.innerHTML = item;
+				mainDiv.append(balanceDiv);
 
-			tr.append(td);
+			} else if (index == 1) {
+				let fromToDiv = document.createElement('div');
+				fromToDiv.innerHTML = `<span>${item}</span> - ${data[2]}`;
+				mainDiv.append(fromToDiv);
+
+			} else if (index == 3) {
+				let fee = document.createElement('div');
+				fee.innerHTML = `Fee: ${item}`;
+				mainDiv.append(fee);
+
+			} else if (index == 4) {
+				let time = document.createElement('div');
+				time.innerHTML = item;
+				mainDiv.append(time);
+			}
 		});
-
-		table.append(tr);	
+		transactionList.append(mainDiv);
 	}
 
 	for (i = 0; i < base.length; i++) {
@@ -130,14 +124,14 @@ async function getTransactions(address) {
 			let adrs = base[i]['in_msg']['source'];
 			let tfee = `${getTonPrice(base[i]['fee'])} 💎`;
 
-			await createTransactionsList([time, tfee, coin, "From", adrs]);
+			createTransactionsList([coin, "From", adrs, tfee, time]);
 		} else {
 			let coin = getTonPrice(base[i]['out_msgs'][0]['value']);
 			let time = new Date(parseInt(base[i]['utime'] + "000")).toLocaleString();
 			let adrs = base[i]['out_msgs'][0]['destination'];
 			let tfee = `${getTonPrice(base[i]['fee'])} 💎`;
 
-			await createTransactionsList([time, tfee, coin, "To", adrs]);
+			createTransactionsList([coin, "To", adrs, tfee, time]);
 		}
 	}
 }
@@ -155,7 +149,6 @@ function start(e) {
 		let inpText = document.getElementById("main-search-input").value.trim();
 		if (inpText == "") return;
 
-		document.getElementById("main-block").style = "padding-top: 40px";
 		document.getElementById("main-wallet-block").style.display = "block";
 		document.getElementById("main-transactions-block").style.display = "block";
 
