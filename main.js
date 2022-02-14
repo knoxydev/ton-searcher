@@ -5,16 +5,6 @@ let wallet = {
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
-async function getTonUsdPrice(coins) {
-	let url = "https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd&include_market_cap=false&include_24hr_vol=false&include_24hr_change=false&include_last_updated_at=false";
-
-	let request = await fetch(url);
-	let resp = await request.json();
-	let price = resp["the-open-network"]["usd"] * coins;
-
-	return price;
-}
-
 async function getAddressInfo(address) {
 	let resp;
 	try {
@@ -35,8 +25,6 @@ async function getAddressInfo(address) {
 		}
 		return x;
 	}
-
-	//console.log(await getTonUsdPrice(Number(String(ton).split('.')[0])));
 
 	ton = `${coins},${tonCoins([]).reverse().join('')}`;
 
