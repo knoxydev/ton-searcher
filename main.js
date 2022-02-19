@@ -1,11 +1,12 @@
 let wallet = {
 	"lt" : "",
-	"hash" : ""
+	"hash" : "",
+	"wallet-address": ""
 };
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
-let changeURL = address => history.pushState(null, null, `/${address}`);
+let changeURL = address => history.pushState(null, null, `/?s=${address}`);
 
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
@@ -34,7 +35,6 @@ let tonPriceUSD = async coins => {
 	let money = numberWithSpaces(coins * resp['the-open-network']['usd']);
 	document.getElementById("wallet-balance-usd").innerHTML = `$${money}`;
 };
-
 
 async function getAddressInfo(address) {
 	let resp;
@@ -151,6 +151,18 @@ document.getElementById("main-search-input").addEventListener("focus", (e) => {
 document.getElementById("main-search-input").addEventListener("focus", (e) => {
 	document.getElementById("main-search-input").removeEventListener("keydown", (e) => start(e));
 });
+
+window.onload = () => {
+	let main = window.location;
+
+	if (main.search == "") return;
+	else {
+		let url = main.search.split('').splice(3).join('');
+
+		document.getElementById("main-search-input").value = url;
+		return getAddressInfo(url);
+	}
+};
 
 function start(e) {
 	if (e.keyCode == 13) {
