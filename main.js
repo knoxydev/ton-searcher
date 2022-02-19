@@ -5,6 +5,8 @@ let wallet = {
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
+let changeURL = address => history.pushState(null, null, `/${address}`);
+
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
 	let Spaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -85,6 +87,7 @@ async function getTransactions(address) {
 		return;
 	} else document.getElementById("no-transactions-block").style.display = "none";
 
+	document.getElementById("wallet-number-transactions").innerHTML = base.length;
 	let transactionList = document.getElementById("main-transactions-block");
 	transactionList.innerHTML = "";
 
@@ -142,7 +145,6 @@ async function getTransactions(address) {
 	}
 }
 
-
 document.getElementById("main-search-input").addEventListener("focus", (e) => {
 	document.getElementById("main-search-input").addEventListener("keydown", (e) => start(e));
 });
@@ -158,6 +160,7 @@ function start(e) {
 		document.getElementById("main-wallet-block").style.display = "block";
 		document.getElementById("main-transactions-block").style.display = "block";
 
+		changeURL(inpText);
 		getAddressInfo(inpText);
 	}
 }
