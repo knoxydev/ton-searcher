@@ -1,12 +1,9 @@
 let wallet = {
 	"lt" : "",
 	"hash" : "",
-	"wallet-address": ""
 };
 
 let getTonPrice = coins => coins * 10 ** (-9);
-
-let changeURL = address => history.pushState(null, null, `/?s=${address}`);
 
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
@@ -152,18 +149,6 @@ document.getElementById("main-search-input").addEventListener("focus", (e) => {
 	document.getElementById("main-search-input").removeEventListener("keydown", (e) => start(e));
 });
 
-window.onload = () => {
-	let main = window.location;
-
-	if (main.search == "") return;
-	else {
-		let url = main.search.split('').splice(3).join('');
-
-		document.getElementById("main-search-input").value = url;
-		return getAddressInfo(url);
-	}
-};
-
 function start(e) {
 	if (e.keyCode == 13) {
 		let inpText = document.getElementById("main-search-input").value.trim();
@@ -172,7 +157,6 @@ function start(e) {
 		document.getElementById("main-wallet-block").style.display = "block";
 		document.getElementById("main-transactions-block").style.display = "block";
 
-		changeURL(inpText);
 		getAddressInfo(inpText);
 	}
 }
