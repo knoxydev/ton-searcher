@@ -5,6 +5,35 @@ let wallet = {
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
+let numberWithSpaces = coins => {
+	// the function adds spaces to large numbers
+	let Spaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	let integerSpaces = Spaces(Number(String(coins).split('.')[0]));
+
+	let str = String(coins).split('').reverse().join('');
+
+	let remainderNumber = x => {
+		for (i = 0; i < str.length; i++) {
+			if (str[i] == ".") break;
+			x.push(str[i])
+		}
+		return x;
+	}
+	return coins = `${integerSpaces},${remainderNumber([]).reverse().join('')}`;
+};
+
+let tonPriceUSD = async coins => {
+	let resp;
+	try {
+		let request = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=USD");
+		resp = await request.json();
+	} catch {return tonPriceUSD(coins);}
+
+	let money = numberWithSpaces(coins * resp['the-open-network']['usd']);
+	document.getElementById("wallet-balance-usd").innerHTML = `$${money}`;
+};
+
+
 async function getAddressInfo(address) {
 	let resp;
 	try {
@@ -14,19 +43,10 @@ async function getAddressInfo(address) {
 
 	let ton = (resp.result.balance == "-1") ? 0 : getTonPrice(resp.result.balance);
 
-	let numberWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-	let coins = numberWithSpaces(Number(String(ton).split('.')[0]));
-	let str = String(ton).split('').reverse().join('');
+	tonPriceUSD(ton);
 
-	let tonCoins = x => {
-		for (i = 0; i < str.length; i++) {
-			if (str[i] == ".") break;
-			x.push(str[i])
-		}
-		return x;
-	}
-
-	ton = `${coins},${tonCoins([]).reverse().join('')}`;
+	let toncoins = numberWithSpaces(ton);
+	ton = toncoins;
 
 	wallet['lt'] = resp.result.last_transaction_id['lt'];
 	wallet['hash'] = resp.result.last_transaction_id['hash'];
