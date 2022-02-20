@@ -1,6 +1,7 @@
 let wallet = {
 	"lt" : "",
 	"hash" : "",
+	"api_key" : "98a684d649323ec721eb6d963019c1fb13afdbe235490f004947b3de0c433738"
 };
 
 let getTonPrice = coins => coins * 10 ** (-9);
@@ -76,7 +77,7 @@ async function getAddressInfo(address) {
 async function getAddressState(address) {
 	let resp;
 	try {
-		let request = await fetch(`https://toncenter.com/api/v2/getAddressState?address=${address}`);
+		let request = await fetch(`https://toncenter.com/api/v2/getAddressState?api_key=${wallet['api_key']}&address=${address}`);
 		resp = await request.json();
 	} catch {return getAddressState(address);} 
 
@@ -87,7 +88,7 @@ async function getAddressState(address) {
 async function getTransactions(address) {
 	let base;
 	try {
-		let request = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${address}&limit=100&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`);
+		let request = await fetch(`https://toncenter.com/api/v2/getTransactions?api_key=${wallet['api_key']}&address=${address}&limit=100&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`);
 		let resp = await request.json();
 		base = await resp.result;
 	} catch {return getTransactions(address);}
