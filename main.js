@@ -172,6 +172,7 @@ window.onload = () => {
 		let url = main.search.split('').splice(3).join('');
 
 		document.getElementById("main-search-input").value = url;
+		changeURL(String(url));
 		return getAddressInfo(String(url));
 	}
 };
