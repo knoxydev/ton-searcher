@@ -165,8 +165,6 @@ document.getElementById("main-search-input").addEventListener("focus", (e) => {
 window.onload = () => {
 	let main = window.location;
 
-	console.log(main)
-
 	if (main.search == "") return;
 	else {
 		let url = main.search.split('').splice(3).join('');
