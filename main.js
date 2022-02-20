@@ -5,6 +5,8 @@ let wallet = {
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
+let changeURL = address => history.pushState(null, null, `/?q=${address}`);
+
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
 	let Spaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -37,9 +39,21 @@ async function getAddressInfo(address) {
 	let resp;
 	try {
 		let request = await fetch(`https://toncenter.com/api/v2/getExtendedAddressInformation?address=${address}`);
+
+		if (request.status == 416) {
+			document.getElementById("error-block").style.display = "block";
+			document.getElementById("main-wallet-block").style.display = "none";
+			document.getElementById("main-transactions-block").innerHTML = "";
+			return;
+		} else {
+			document.getElementById("error-block").style.display = "none";
+			document.getElementById("main-wallet-block").style.display = "block";
+			document.getElementById("main-transactions-block").style.display = "block";
+		}
+
 		resp = await request.json();
 	} catch {return getAddressInfo(address);}
-
+	
 	let ton = (resp.result.balance == "-1") ? 0 : getTonPrice(resp.result.balance);
 
 	tonPriceUSD(ton);
@@ -84,7 +98,6 @@ async function getTransactions(address) {
 		return;
 	} else document.getElementById("no-transactions-block").style.display = "none";
 
-	document.getElementById("wallet-number-transactions").innerHTML = base.length;
 	let transactionList = document.getElementById("main-transactions-block");
 	transactionList.innerHTML = "";
 
@@ -149,6 +162,20 @@ document.getElementById("main-search-input").addEventListener("focus", (e) => {
 	document.getElementById("main-search-input").removeEventListener("keydown", (e) => start(e));
 });
 
+window.onload = () => {
+	let main = window.location;
+
+	console.log(main)
+
+	if (main.search == "") return;
+	else {
+		let url = main.search.split('').splice(3).join('');
+
+		document.getElementById("main-search-input").value = url;
+		return getAddressInfo(String(url));
+	}
+};
+
 function start(e) {
 	if (e.keyCode == 13) {
 		let inpText = document.getElementById("main-search-input").value.trim();
@@ -157,6 +184,7 @@ function start(e) {
 		document.getElementById("main-wallet-block").style.display = "block";
 		document.getElementById("main-transactions-block").style.display = "block";
 
+		changeURL(String(inpText));
 		getAddressInfo(inpText);
 	}
 }
