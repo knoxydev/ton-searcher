@@ -6,7 +6,7 @@ let wallet = {
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
-let changeURL = address => history.pushState(null, null, `/?q=${address}`);
+let changeURL = address => history.pushState(null, null, `/ton-searcher/?q=${address}`);
 
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
