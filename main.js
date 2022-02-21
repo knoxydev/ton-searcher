@@ -191,6 +191,15 @@ window.onload = () => {
 	else {
 		let url = main.search.split('').splice(3).join('');
 
+		if (url.length > 0) {
+			if (url.length < 48 || url.length > 48) {
+				document.getElementById("main-wallet-block").style.display = "none";
+				document.getElementById("main-transactions-block").style.display = "none";
+				document.getElementById("error-block").style.display = "block";
+				return;
+			}
+		}
+
 		document.getElementById("main-search-input").value = url;
 		changeURL(String(url));
 		return getAddressInfo(String(url));
