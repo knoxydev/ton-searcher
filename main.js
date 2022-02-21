@@ -1,12 +1,12 @@
 let wallet = {
 	"lt" : "",
 	"hash" : "",
-	"api_key" : "98a684d649323ec721eb6d963019c1fb13afdbe235490f004947b3de0c433738"
+	"api_key" : "47515269dd19c24f6c2ca89cd999f1518a65595892ee6d99b74bb4854a0d1ade"
 };
 
 let getTonPrice = coins => coins * 10 ** (-9);
 
-let changeURL = address => history.pushState(null, null, `/ton-searcher/?q=${address}`);
+let changeURL = address => history.pushState(null, null, `/?q=${address}`);
 
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
