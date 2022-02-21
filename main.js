@@ -10,9 +10,10 @@ let changeURL = address => history.pushState(null, null, `/ton-searcher/?q=${add
 
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
+	if (coins == 0) return;
+
 	let Spaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 	let integerSpaces = Spaces(Number(String(coins).split('.')[0]));
-
 	let str = String(coins).split('').reverse().join('');
 
 	let remainderNumber = x => {
@@ -22,6 +23,14 @@ let numberWithSpaces = coins => {
 		}
 		return x;
 	}
+	
+	//let remainderNumberReverse = remainderNumber([]).reverse();
+	//let fractionalPart = '00';
+	//if (remainderNumberReverse.length >= 2) fractionalPart = `${remainderNumberReverse[0]}${remainderNumberReverse[1]}`;
+	//else if (remainderNumberReverse.length == 1) fractionalPart = `${remainderNumberReverse[0]}0`;
+
+	//return `${integerSpaces},${fractionalPart}`;
+
 	return coins = `${integerSpaces},${remainderNumber([]).reverse().join('')}`;
 };
 
@@ -37,6 +46,7 @@ let tonPriceUSD = async coins => {
 };
 
 async function getAddressInfo(address) {
+	document.getElementById("main-wallet-block").style.display = "none";
 	let resp;
 	try {
 		let request = await fetch(`https://toncenter.com/api/v2/getExtendedAddressInformation?address=${address}`);
@@ -45,6 +55,7 @@ async function getAddressInfo(address) {
 			document.getElementById("error-block").style.display = "block";
 			document.getElementById("main-wallet-block").style.display = "none";
 			document.getElementById("main-transactions-block").innerHTML = "";
+			document.getElementById("main-transactions-block").style.display = "none";
 			return;
 		} else {
 			document.getElementById("error-block").style.display = "none";
@@ -70,6 +81,7 @@ async function getAddressInfo(address) {
 
 	document.getElementById("wallet-address").innerHTML = resp.result.address.account_address;
 	document.getElementById("wallet-balance").innerHTML = `${ton} 💎`;
+	document.getElementById("main-wallet-block").style.display = "block";
 
 	getAddressState(address);
 }
@@ -99,8 +111,13 @@ async function getTransactions(address) {
 		return;
 	} else document.getElementById("no-transactions-block").style.display = "none";
 
+	await transactionBlock(base);
+}
+
+function transactionBlock(base) {
 	let transactionList = document.getElementById("main-transactions-block");
 	transactionList.innerHTML = "";
+	transactionList.style.display = "none";
 
 	function createTransactionsList(data) {
 		let mainDiv = document.createElement('div');
@@ -154,7 +171,10 @@ async function getTransactions(address) {
 			createTransactionsList([coin, "To", adrs, tfee, time]);
 		}
 	}
+
+	transactionList.style.display = "block";
 }
+
 
 document.getElementById("main-search-input").addEventListener("focus", (e) => {
 	document.getElementById("main-search-input").addEventListener("keydown", (e) => start(e));
@@ -162,6 +182,7 @@ document.getElementById("main-search-input").addEventListener("focus", (e) => {
 document.getElementById("main-search-input").addEventListener("focus", (e) => {
 	document.getElementById("main-search-input").removeEventListener("keydown", (e) => start(e));
 });
+
 
 window.onload = () => {
 	let main = window.location;
@@ -179,10 +200,13 @@ window.onload = () => {
 function start(e) {
 	if (e.keyCode == 13) {
 		let inpText = document.getElementById("main-search-input").value.trim();
-		if (inpText == "") return;
 
-		document.getElementById("main-wallet-block").style.display = "block";
-		document.getElementById("main-transactions-block").style.display = "block";
+		if (inpText == "" || inpText.length < 48) {
+			document.getElementById("main-wallet-block").style.display = "none";
+			document.getElementById("main-transactions-block").style.display = "none";
+			document.getElementById("error-block").style.display = "block";
+			return;
+		}
 
 		changeURL(String(inpText));
 		getAddressInfo(inpText);
