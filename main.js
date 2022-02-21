@@ -201,7 +201,7 @@ function start(e) {
 	if (e.keyCode == 13) {
 		let inpText = document.getElementById("main-search-input").value.trim();
 
-		if (inpText == "" || inpText.length < 48) {
+		if (inpText == "" || inpText.length < 48 || inpText.length > 48) {
 			document.getElementById("main-wallet-block").style.display = "none";
 			document.getElementById("main-transactions-block").style.display = "none";
 			document.getElementById("error-block").style.display = "block";
