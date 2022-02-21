@@ -1,7 +1,7 @@
 let wallet = {
 	"lt" : "",
 	"hash" : "",
-	"api_key" : "47515269dd19c24f6c2ca89cd999f1518a65595892ee6d99b74bb4854a0d1ade"
+	"api_key" : "b0f5c4749308355b4373e494805e5dfa1b84a71cbec822df8cb6f6886aa080ba"
 };
 
 let getTonPrice = coins => coins * 10 ** (-9);
