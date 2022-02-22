@@ -11,6 +11,7 @@ let changeURL = address => history.pushState(null, null, `/ton-searcher/?q=${add
 let numberWithSpaces = coins => {
 	// the function adds spaces to large numbers
 	if (coins == 0) return;
+	if (String(coins).length == 1) return;
 
 	let Spaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 	let integerSpaces = Spaces(Number(String(coins).split('.')[0]));
