@@ -67,12 +67,20 @@ async function getAddressInfo(address) {
 		resp = await request.json();
 	} catch {return getAddressInfo(address);}
 	
+
 	let ton = (resp.result.balance == "-1") ? 0 : getTonPrice(resp.result.balance);
 
-	tonPriceUSD(ton);
-
-	let toncoins = numberWithSpaces(ton);
-	ton = toncoins;
+	// Checking for a zero balance
+	if (ton == 0) {
+		document.getElementById("wallet-balance-usd").innerHTML = 0;
+		document.getElementById("main-wallet-block").style.display = "none";
+		document.getElementById("main-transactions-block").style.display = "none";
+		document.getElementById("no-transactions-block").style.display = "block";
+	} else {
+		tonPriceUSD(ton);
+		let toncoins = numberWithSpaces(ton);
+		ton = toncoins;
+	}
 
 	wallet['lt'] = resp.result.last_transaction_id['lt'];
 	wallet['hash'] = resp.result.last_transaction_id['hash'];
