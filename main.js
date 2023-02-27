@@ -66,6 +66,8 @@ async function getAddressInfo(address) {
 
 		resp = await request.json();
 	} catch {return getAddressInfo(address);}
+
+	console.log(resp)
 	
 
 	let ton = (resp.result.balance == "-1") ? 0 : getTonPrice(resp.result.balance);
@@ -109,10 +111,13 @@ async function getAddressState(address) {
 async function getTransactions(address) {
 	let base;
 	try {
-		let request = await fetch(`https://toncenter.com/api/v2/getTransactions?api_key=${wallet['api_key']}&address=${address}&limit=100&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=false`);
+		let request = await fetch(`https://toncenter.com/api/v2/getTransactions?api_key=${wallet['api_key']}&address=${address}&limit=100&lt=${wallet['lt']}&hash=${wallet['hash']}&to_lt=0&archival=true`);
 		let resp = await request.json();
 		base = await resp.result;
 	} catch {return getTransactions(address);}
+
+	console.log(address)
+	console.log(base)
 
 	if (base.length == 0) {
 		document.getElementById("no-transactions-block").style.display = "block";
